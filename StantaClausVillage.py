@@ -45,8 +45,7 @@ class Factory(Building):
 
     def workers_list(self):
         for _ in range(len(self.factory_workers)):
-            self.work = self.factory_workers [_]             
-            self.worklst.append(self.work.name)
+            self.worklst.append(self.factory_workers [_].name)
         return self.worklst 
 
     def __del__(self): 
@@ -160,9 +159,15 @@ class Reindeer(Animal):
 
 class Dog(Animal):
     species = "dog"
-    
+    def __init__(self,name, coat_color, birth_year, breed):
+        super().__init__(name, coat_color, birth_year)
+        self.breed = breed
+
     def __del__(self): 
         print(f"Dog named {self.name} deleted.")    
+
+    def __str__(self):
+       return super().__str__() + f"\nbreed: {self.breed}"  
 
 
 
@@ -189,7 +194,9 @@ print("\n")
 tim = FactoryWorker("Tim" , 2001)
 tim.specialization("plush bunnies")
 print(tim)
-
+bob = FactoryWorker("Bob" , 1985)
+bob.specialization("plush ducklings")
+print(bob)
 
 
 print("\n\n-----------Factory  ------------")
@@ -199,7 +206,7 @@ toys_factory.production("plush toys")
 # hiring employees
 toys_factory.add_worker(ron)
 toys_factory.add_worker(tim)
-toys_factory.add_worker(ron)
+toys_factory.add_worker(bob)
 print(toys_factory)
 
 print("\nplush toys factory workers:\n")
@@ -232,7 +239,7 @@ rudolf= Reindeer("Rudolf", "brown", 2013)
 print(rudolf)
 
 print("\n\n-------Dog ---------")
-barry= Dog("Barry","white")
+barry= Dog("Barry","white", 2019, "border collie")
 print(barry)
 print("\n")
 
