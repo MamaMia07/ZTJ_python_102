@@ -17,17 +17,19 @@ class Building(Village):
         self.year_of_construction = year_of_construction
         self.storeys_number = storeys_number
         self.building_area = building_area
-
-##    def __str__(self):
-##        return f"built in: {self.year_of_construction}\nstoreys number: {self.storeys_number}\n\
-##location: {self.village_name} ,  {self.latitude}  {self.longitude}"
+        
+    def __str__(self):
+        return f"built in: {self.year_of_construction}\nstoreys number: {self.storeys_number}\n\
+location: {self.village_name} ,  {self.latitude}  {self.longitude}"
     
+
+
 
 class Factory(Building):
     function = "factory"
     factory_production = ""
     factory_workers = []
-
+    worklst = []
     def production(self, prod ):
         self.factory_production = prod
         return self.factory_production
@@ -36,11 +38,24 @@ class Factory(Building):
         self.factory_workers.append(worker)
         return self.factory_workers 
 
-    def __str__(self):
-        return f"building function: {self.function}\nproduction: {self.factory_production}\n\
-built in: {self.year_of_construction}\nstoreys number: {self.storeys_number}\n\
-location: {self.village_name} ,  {self.latitude}  {self.longitude}" 
+    def fire_worker(self, worker):
+        self.factory_workers.remove(worker)
+        print(f"{worker.name} is fired")
+        return self.factory_workers 
 
+    def workers_list(self):
+        for _ in range(len(self.factory_workers)):
+            self.work = self.factory_workers [_]             
+            self.worklst.append(self.work.name)
+        return self.worklst 
+
+    def __del__(self): 
+        print(f"{function} deleted.")
+
+    def __str__(self):
+       return f"building function: {self.function}\nproduction: {self.factory_production}\n"+ super().__str__() 
+
+    
 
 
 class ResidentialBbuilding(Building):
@@ -68,9 +83,8 @@ class ResidentialBbuilding(Building):
         print(f"{function} deleted.")
 
     def __str__(self):
-        return f"building function: {self.function}\nnumber of inhabitants: {self.inhabitants}\n\
-built in: {self.year_of_construction}\nstoreys number: {self.storeys_number}\n\
-location: {self.village_name} ,  {self.latitude}  {self.longitude}" 
+       return f"building function: {self.function}\nnumber of inhabitants: {self.inhabitants}\n"+ super().__str__()
+
 
 
 
@@ -138,7 +152,7 @@ coat color: {self.coat_color}\nage: {self.age}"
 
 class Reindeer(Animal):
     species = "reindeer"
-    super(Animal).__str__()
+    
     def __del__(self): 
         print(f"Reindeer named {self.name} deleted.")
 
@@ -146,13 +160,13 @@ class Reindeer(Animal):
 
 class Dog(Animal):
     species = "dog"
-    super(Animal).__str__()
+    
     def __del__(self): 
         print(f"Dog named {self.name} deleted.")    
 
 
 
-        
+#------------------------------------------------------    
 
 print("\n---Santa Claus Village information------")
 st_claus_village= Village()
@@ -164,7 +178,7 @@ print(santa_claus)
 
 
 
-print("\n\n-----factory workers information------------")
+print("\n\n-----Factory workers information------------")
 ron = FactoryWorker("Ron" , 1999)
 ron.specialization("teddy bears")
 print(ron)
@@ -177,21 +191,30 @@ tim.specialization("plush bunnies")
 print(tim)
 
 
-print("\n\n-----------factory  ------------")
+
+print("\n\n-----------Factory  ------------")
 toys_factory = Factory(1988, 4, 25)
 #---set factory producytion profile--
 toys_factory.production("plush toys")
+# hiring employees
 toys_factory.add_worker(ron)
 toys_factory.add_worker(tim)
+toys_factory.add_worker(ron)
 print(toys_factory)
-toys_factory.add_worker(ron)
-toys_factory.add_worker(tim)
-print("\n factory workers:\n")
+
+print("\nplush toys factory workers:\n")
+
 for i in range(len(toys_factory.factory_workers)):
     print(f"{toys_factory.factory_workers[i]}\n")
 
+# firing employees
+toys_factory.fire_worker(ron)
 
-print("\n\n-----------elfs' house ------------")
+print(f"\nsurvivors:\n{toys_factory.workers_list()}")
+
+
+
+print("\n\n-----------Elfs' house ------------")
 house_of_elfs = ResidentialBbuilding(1988, 4, 25)
 house_of_elfs.inhabitants_nb(7)
 print(house_of_elfs)
@@ -204,14 +227,14 @@ print(house_of_elfs)
 
 
 
-print("\n\n------reindeer ------------")
+print("\n\n------Reindeer ------------")
 rudolf= Reindeer("Rudolf", "brown", 2013)
 print(rudolf)
 
-print("\n\n-------dog ---------")
+print("\n\n-------Dog ---------")
 barry= Dog("Barry","white")
 print(barry)
-
+print("\n")
 
 
         
