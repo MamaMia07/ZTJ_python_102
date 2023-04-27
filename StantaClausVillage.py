@@ -18,17 +18,23 @@ class Building(Village):
         self.storeys_number = storeys_number
         self.building_area = building_area
 
+##    def __str__(self):
+##        return f"built in: {self.year_of_construction}\nstoreys number: {self.storeys_number}\n\
+##location: {self.village_name} ,  {self.latitude}  {self.longitude}"
     
 
 class Factory(Building):
     function = "factory"
     factory_production = ""
+    factory_workers = []
+
     def production(self, prod ):
         self.factory_production = prod
         return self.factory_production
 
-    def __del__(self): 
-        print(f"{factory_production} factory deleted.")
+    def add_worker(self, worker):
+        self.factory_workers.append(worker)
+        return self.factory_workers 
 
     def __str__(self):
         return f"building function: {self.function}\nproduction: {self.factory_production}\n\
@@ -157,11 +163,32 @@ santa_claus = StClaus()
 print(santa_claus)
 
 
+
+print("\n\n-----factory workers information------------")
+ron = FactoryWorker("Ron" , 1999)
+ron.specialization("teddy bears")
+print(ron)
+print("\n--information about the production achievements")
+ron.producted_pieces(3)
+ron.get_efficiency()
+print("\n")
+tim = FactoryWorker("Tim" , 2001)
+tim.specialization("plush bunnies")
+print(tim)
+
+
 print("\n\n-----------factory  ------------")
 toys_factory = Factory(1988, 4, 25)
 #---set factory producytion profile--
-toys_factory.production("dolls")
+toys_factory.production("plush toys")
+toys_factory.add_worker(ron)
+toys_factory.add_worker(tim)
 print(toys_factory)
+toys_factory.add_worker(ron)
+toys_factory.add_worker(tim)
+print("\n factory workers:\n")
+for i in range(len(toys_factory.factory_workers)):
+    print(f"{toys_factory.factory_workers[i]}\n")
 
 
 print("\n\n-----------elfs' house ------------")
@@ -175,13 +202,7 @@ print("\n--after removing inhabitants--")
 house_of_elfs.removeinhabitant(10)
 print(house_of_elfs)
 
-print("\n\n-----factory worker information------------")
-ron = FactoryWorker("Ron" , 1999)
-ron.specialization("teddy bears")
-print(ron)
-print("\n--information about the production achievements--")
-ron.producted_pieces(3)
-ron.get_efficiency()
+
 
 print("\n\n------reindeer ------------")
 rudolf= Reindeer("Rudolf", "brown", 2013)
